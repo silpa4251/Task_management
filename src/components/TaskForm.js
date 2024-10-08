@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../features/Task/taskSlice';
+import { useNavigate } from 'react-router-dom';
 
 const TaskForm = () => {
     const userId = useSelector((state) => state.auth.user.id);
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newTask = {
             id: Date.now().toString(),
@@ -16,9 +18,14 @@ const TaskForm = () => {
             description,
             status: 'To Do'
         };
-        dispatch(addTask({ userId, newTask }));
-        setTitle('');
-        setDescription('');
+        const resultAction = await dispatch(addTask({ userId, newTask }));
+        if (addTask.fulfilled.match(resultAction)) {
+            setTitle('');
+            setDescription('');
+            navigate('/listtask');
+        } else {
+            console.error('Failed to add the task');
+        }
     };
 
     return (
@@ -48,4 +55,4 @@ const TaskForm = () => {
     );
 };
 
-export default TaskForm;
+export default TaskForm

@@ -8,9 +8,9 @@
       "confirmPassword": "123456",
       "tasks": [
         {
-          "id": "1728230837455",
-          "title": "hello",
-          "description": "first task",
+          "id": "1728368800114",
+          "title": "html",
+          "description": "third task",
           "status": "To Do"
         }
       ]
@@ -21,31 +21,14 @@
       "email": "hari@gmail.com",
       "password": "hari1018",
       "confirmPassword": "hari1018",
-      "tasks": []
-    },
-    {
-      "id": "72f7",
-      "username": "manu",
-      "email": "devil@gmail.com",
-      "password": "4251123",
-      "confirmPassword": "4251123",
-      "tasks": []
-    },
-    {
-      "id": "8270",
-      "username": "user1",
-      "email": "user1@gmail.com",
-      "password": "hello123",
-      "confirmPassword": "hello123",
-      "tasks": []
-    },
-    {
-      "id": "d94b",
-      "username": "user2",
-      "email": "user2@gmail.com",
-      "password": "123456",
-      "confirmPassword": "123456",
-      "tasks": []
+      "tasks": [
+        {
+          "id": "1728385726841",
+          "title": "redux",
+          "description": "redux core, toolkit , react-redux",
+          "status": "To Do"
+        }
+      ]
     }
   ]
 }

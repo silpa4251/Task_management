@@ -4,8 +4,8 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 
 export const API_URL = 'http://localhost:5000/users';
 const initialState ={
-    user: null,
-    isAuthenticated: false,
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    isAuthenticated: !!localStorage.getItem('user'),
     isLoading: false,
     error: null,
 };
@@ -36,14 +36,13 @@ export const loginUser = createAsyncThunk(
     'auth/login',
     async (credentials, thunkAPI) => {
         try {
-            const response = await axios.get(`${API_URL}?email=${credentials.email}`);
-            const user =  response.data[0];
-            if (!user || user.password !== credentials.password) {
+            const response = await axios.get(API_URL);
+            const user =  response.data.find((user) => user.email === credentials.email && user.password === credentials.password);
+            if (!user) {
                 return thunkAPI.rejectWithValue('Incorrect email or password');
             }
-            return {
-                user
-            };
+            return user;
+            
 
         } catch (error) {
             return thunkAPI.rejectWithValue('Failed to login');
@@ -60,6 +59,10 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             localStorage.removeItem('user');
         },
+        // setUser: (state, action) => {
+        //     state.user = action.payload;
+        //     localStorage.setItem('user', JSON.stringify(action.payload)); 
+        // },
         resetError: (state) => {
             state.error = null;
         }
@@ -70,8 +73,9 @@ const authSlice = createSlice({
         });
         builder.addCase(registerUser.fulfilled,(state,action) => {
             state.isLoading = false;
-            state.user = action.payload.user;
-            localStorage.setItem('user', action.payload.user);
+            state.user = action.payload;
+            state.isAuthenticated = true;
+            localStorage.setItem('user', JSON.stringify(action.payload));
         });
         builder.addCase(registerUser.rejected,(state,action) => {
             state.isLoading = false;
@@ -82,8 +86,9 @@ const authSlice = createSlice({
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.user = action.payload.user;
+            state.user = action.payload;
             state.isAuthenticated = true;
+            localStorage.setItem('user', JSON.stringify(action.payload));
         });
         builder.addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
