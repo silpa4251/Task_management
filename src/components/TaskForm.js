@@ -22,7 +22,7 @@ const TaskForm = () => {
         if (addTask.fulfilled.match(resultAction)) {
             setTitle('');
             setDescription('');
-            navigate('/listtask');
+            navigate('/dashboard/tasklist');
         } else {
             console.error('Failed to add the task');
         }

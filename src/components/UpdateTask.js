@@ -39,7 +39,7 @@ const UpdateTask = () => {
         };
         const resultAction = await dispatch(updateTask({ userId, updatedTask }));
         if (updateTask.fulfilled.match(resultAction)) {
-            navigate('/listtask');
+            navigate('/dashboard/tasklist');
         } else {
             console.error('Failed to update task');
         }

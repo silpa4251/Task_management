@@ -17,12 +17,12 @@ function App() {
    <Routes>
       <Route path='/' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      <Route path='/dashboard' element={<Dashboard />} /> 
-      
-        <Route path='listtask' element={<TaskList />} />
+      <Route path='/dashboard' element={<Dashboard />} > 
+        <Route index element={<TaskList />} />
+        <Route path='tasklist' element={<TaskList />} />
         <Route path="addtask" element={<TaskForm />} />
-      
-      <Route path="/updatetask/:id" element={<UpdateTask />} />
+        <Route path="updatetask/:id" element={<UpdateTask />} />
+      </Route>
       {/* <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
    </Routes>
    </>

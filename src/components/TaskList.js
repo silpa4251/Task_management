@@ -20,22 +20,68 @@ const TaskList = () => {
 
     return (
         <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Task Dashboard</h1>
-      {status === 'loading' && <p>Loading tasks...</p>}
-      {error && <p>Error fetching tasks: {error}</p>}
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {tasks.map((task) => (
-          <div key={task.id} className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-semibold">{task.title}</h2>
-            <p>{task.description}</p>
-            <Link to={`/updatetask/${task.id}`} className="text-blue-500">Edit</Link>
-            <button onClick={() => handleDelete(task.id)} className="text-red-500 ml-4">Delete</button>
-          </div>
-        ))}
-      </div>
-    </div>
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Task Dashboard</h1>
+
+            {/* Loading and error states */}
+            {status === 'loading' && <p className="text-center text-blue-500">Loading tasks...</p>}
+            {error && <p className="text-center text-red-500">Error fetching tasks: {error}</p>}
+
+            {/* Task Table */}
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr className="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                            <th className="py-3 px-6 text-left">Title</th>
+                            <th className="py-3 px-6 text-left">Description</th>
+                            <th className="py-3 px-6 text-left">Status</th>
+                            <th className="py-3 px-6 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-gray-600 text-sm font-light">
+                        {tasks.length > 0 ? (
+                            tasks.map((task) => (
+                                <tr key={task.id} className="border-b border-gray-200 hover:bg-gray-100">
+                                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                                        <div className="font-semibold">{task.title}</div>
+                                    </td>
+                                    <td className="py-3 px-6 text-left">
+                                        <p>{task.description}</p>
+                                    </td>
+                                    <td className="py-3 px-6 text-left">
+                                        <span
+                                            className={`inline-block px-3 py-1 text-sm font-medium rounded ${task.status === 'To Do' ? 'bg-yellow-200 text-yellow-700' : 'bg-green-200 text-green-700'}`}
+                                        >
+                                            {task.status}
+                                        </span>
+                                    </td>
+                                    <td className="py-3 px-6 text-center">
+                                        <Link
+                                            to={`/dashboard/updatetask/${task.id}`}
+                                            className="text-blue-500 hover:underline mr-4"
+                                        >
+                                            Edit
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDelete(task.id)}
+                                            className="text-red-500 hover:text-red-700 focus:outline-none"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="py-3 px-6 text-center text-gray-600">
+                                    No tasks available
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     );
 };
 
-export default TaskList
+export default TaskList;

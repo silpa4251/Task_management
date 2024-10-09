@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between">
             <Link to="/dashboard" className="font-bold text-lg">Task Dashboard</Link>
             <div>
-                <Link to="/addtask" className="bg-white text-blue-600 px-4 py-2 rounded">Add Task</Link>
+                <Link to="/dashboard/addtask" className="bg-white text-blue-600 px-4 py-2 rounded">Add Task</Link>
                 {isAuthenticated ? (
                     <>
                         <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded ml-2">Logout</button>
